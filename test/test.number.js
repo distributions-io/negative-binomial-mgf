@@ -43,13 +43,18 @@ describe( 'number mgf', function tests() {
 		for ( var i = 0; i < data.length; i++ ) {
 			actual =  mgf( data[ i ], r, p );
 			if ( isFiniteNumber( actual ) && isFiniteNumber( expected[ i ] ) ) {
-				assert.closeTo( actual, expected[ i ] , 1e-14 );
+				assert.closeTo( actual, expected[ i ] , 1e-12 );
 			}
 		}
 	});
 
 	it( 'should return `NaN` if provided `NaN` as input', function test() {
 		assert.isTrue( isnan( mgf( NaN, r, p ) ) );
+	});
+
+	it( 'should return `NaN` if `t >= -ln( p )`', function test() {
+		assert.isTrue( isnan( mgf( -Math.log( p ), r, p ) ) );
+		assert.isTrue( isnan( mgf( -Math.log( p ) + 0.01, r, p ) ) );
 	});
 
 });

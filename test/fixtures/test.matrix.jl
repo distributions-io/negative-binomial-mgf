@@ -1,11 +1,11 @@
 using Distributions
 using JSON
 
-r = 1
+r = 4
 p = 0.5
-d = NegativeBinomial( r,p )
+d = NegativeBinomial( r, p )
 
-x = linspace( 1, 0, 25 )
+x = linspace( -0.2, 0.2, 25 )
 
 dmgf(t) = mgf(d, t )
 y = map( dmgf, x )
