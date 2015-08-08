@@ -7,12 +7,12 @@ Moment-Generating Function
 The [moment-generating function](https://en.wikipedia.org/wiki/Moment-generating_function) for a [Negative Binomial](https://en.wikipedia.org/wiki/Negative Binomial_distribution) random variable is
 
 <div class="equation" align="center" data-raw-text="
-    M_X(t) := \mathbb{E}\!\left[e^{tX}\right]" data-equation="eq:mgf_function">
-	<img src="" alt="Moment-generating function (MGF) for a Negative Binomial distribution.">
+M_X(t) := \mathbb{E}\!\left[e^{tX}\right] =  \biggl(\frac{\left( 1- p \right) e^t }{1 - p e^t}\biggr)^{\!r} \text{ for }t<-\log p">
+	<img src="https://cdn.rawgit.com/distributions-io/negative-binomial-mgf/530dbd56777ef21631eb4e903c8f73908ede3b42/docs/img/eqn.svg" alt="Moment-generating function (MGF) for a Negative Binomial distribution.">
 	<br>
 </div>
 
-where `r` is the number of failures until the experiment is stopped and `p` is the success probability.
+where `r > 0` is the number of failures until the experiment is stopped and `0 <= p <= 1` is the success probability.
 
 ## Installation
 
