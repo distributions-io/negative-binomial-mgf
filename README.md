@@ -40,36 +40,36 @@ var matrix = require( 'dstructs-matrix' ),
 	t,
 	i;
 
-out = mgf( 1 );
-// returns
+out = mgf( 0.2 );
+// returns ~1.569
 
-out = mgf( -1 );
-// returns 0
+out = mgf( 0 );
+// returns +Infinity
 
-t = [ 0, 0.5, 1, 1.5, 2, 2.5 ];
+t = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5 ];
 out = mgf( t );
-// returns [...]
+// returns [ 1, ~1.235, ~1.569, ~2.076, ~2.936, ~4.693 ]
 
-t = new Int8Array( t );
+t = new Float64Array( t );
 out = mgf( t );
-// returns Float64Array( [...] )
+// returns Float64Array( [1,~1.235,~1.569,~2.076,~2.936,~4.693] )
 
 t = new Float32Array( 6 );
 for ( i = 0; i < 6; i++ ) {
-	t[ i ] = i * 0.5;
+	t[ i ] = i * 0.2
 }
 mat = matrix( t, [3,2], 'float32' );
 /*
-	[ 0  0.5
-	  1  1.5
-	  2  2.5 ]
+	[ 0   0.2
+	  0.4 0.6
+	  0.8 1  ]
 */
 
 out = mgf( mat );
 /*
-	[
-
-	   ]
+	[  1     ~1.569
+	  ~2.936 ~10.243
+	   NaN    NaN   ]
 */
 ```
 
@@ -83,16 +83,16 @@ The function accepts the following `options`:
 *	__path__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path.
 *	__sep__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path separator. Default: `'.'`.
 
-A [Negative Binomial](https://en.wikipedia.org/wiki/Negative Binomial_distribution) distribution is a function of 2 parameter(s): `r`(number of failures until the experiment is stopped) and `p`(success probability). By default, `r` is equal to `1` and `p` is equal to `0.5`. To adjust either parameter, set the corresponding option.
+A [Negative Binomial](https://en.wikipedia.org/wiki/Negative Binomial_distribution) distribution is a function of two parameters: `r`(number of failures until the experiment is stopped) and `p`(success probability). By default, `r` is equal to `1` and `p` is equal to `0.5`. To adjust either parameter, set the corresponding option.
 
 ``` javascript
 var t = [ 0, 0.5, 1, 1.5, 2, 2.5 ];
 
 var out = mgf( t, {
-	'r': 0,
-	'p': 5
+	'r': 2,
+	'p': 0.05
 });
-// returns [...]
+// returns [ 1, ~2.914, ~8.931, ~30.109, ~123,934, ~876.684 ]
 ```
 
 For non-numeric `arrays`, provide an accessor `function` for accessing `array` values.
@@ -112,9 +112,11 @@ function getValue( d, i ) {
 }
 
 var out = mgf( data, {
-	'accessor': getValue
+	'accessor': getValue,
+	'r': 2,
+	'p': 0.05
 });
-// returns [...]
+// returns [ 1, ~2.914, ~8.931, ~30.109, ~123,934, ~876.684 ]
 ```
 
 
@@ -132,16 +134,18 @@ var data = [
 
 var out = mgf( data, {
 	'path': 'x/1',
-	'sep': '/'
+	'sep': '/',
+	'r': 2,
+	'p': 0.05
 });
 /*
 	[
-		{'x':[0,]},
-		{'x':[1,]},
-		{'x':[2,]},
-		{'x':[3,]},
-		{'x':[4,]},
-		{'x':[5,]}
+		{'x':[0,1]},
+		{'x':[1,~2.914]},
+		{'x':[2,~8.931]},
+		{'x':[3,~30.109]},
+		{'x':[4,~123.934]},
+		{'x':[5,~876.684]}
 	]
 */
 
@@ -154,18 +158,18 @@ By default, when provided a [`typed array`](https://developer.mozilla.org/en-US/
 ``` javascript
 var t, out;
 
-t = new Int8Array( [0,1,2,3,4] );
+t = new Float64Array( [0,0.1,0.2,0.3,0.4] );
 
 out = mgf( t, {
 	'dtype': 'int32'
 });
-// returns Int32Array( [...] )
+// returns Int32Array( [1,1,1,2,2] )
 
 // Works for plain arrays, as well...
-out = mgf( [0,0.5,1,1.5,2], {
+out = mgf( [0,0.1,0.2,0.3,0.4], {
 	'dtype': 'uint8'
 });
-// returns Uint8Array( [...] )
+// returns Uint8Array( [1,1,1,2,2] )
 ```
 
 By default, the function returns a new data structure. To mutate the input data structure (e.g., when input values can be discarded or when optimizing memory usage), set the `copy` option to `false`.
@@ -177,34 +181,34 @@ var bool,
 	t,
 	i;
 
-t = [ 0, 0.5, 1, 1.5, 2 ];
+t = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5 ];
 
 out = mgf( t, {
 	'copy': false
 });
-// returns [...]
+// returns [ 1, ~1.235, ~1.569, ~2.076, ~2.936, ~4.693 ]
 
 bool = ( t === out );
 // returns true
 
 t = new Float32Array( 6 );
 for ( i = 0; i < 6; i++ ) {
-	t[ i ] = i * 0.5;
+	t[ i ] = i * 0.2;
 }
 mat = matrix( t, [3,2], 'float32' );
 /*
-	[ 0  0.5
-	  1  1.5
-	  2  2.5 ]
+	[ 0   0.2
+	  0.4 0.6
+	  0.8 1 ]
 */
 
 out = mgf( mat, {
 	'copy': false
 });
 /*
-	[
-
-	   ]
+	[  1     ~1.569
+	  ~2.936 ~10.243
+	   NaN    NaN ]
 */
 
 bool = ( mat === out );
