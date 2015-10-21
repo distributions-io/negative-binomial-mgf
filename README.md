@@ -2,13 +2,13 @@ Moment-Generating Function
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][codecov-image]][codecov-url] [![Dependencies][dependencies-image]][dependencies-url]
 
-> [Negative Binomial](https://en.wikipedia.org/wiki/Negative Binomial_distribution) distribution moment-generating function (MGF).
+> [Negative binomial](https://en.wikipedia.org/wiki/Negative_binomial_distribution) distribution moment-generating function (MGF).
 
-The [moment-generating function](https://en.wikipedia.org/wiki/Moment-generating_function) for a [Negative Binomial](https://en.wikipedia.org/wiki/Negative Binomial_distribution) random variable is
+The [moment-generating function](https://en.wikipedia.org/wiki/Moment-generating_function) for a [negative binomial](https://en.wikipedia.org/wiki/Negative_binomial_distribution) random variable is
 
 <div class="equation" align="center" data-raw-text="
 M_X(t) := \mathbb{E}\!\left[e^{tX}\right] =  \biggl(\frac{\left( 1- p \right) e^t }{1 - p e^t}\biggr)^{\!r} \text{ for }t<-\log p">
-	<img src="https://cdn.rawgit.com/distributions-io/negative-binomial-mgf/530dbd56777ef21631eb4e903c8f73908ede3b42/docs/img/eqn.svg" alt="Moment-generating function (MGF) for a Negative Binomial distribution.">
+	<img src="https://cdn.rawgit.com/distributions-io/negative-binomial-mgf/530dbd56777ef21631eb4e903c8f73908ede3b42/docs/img/eqn.svg" alt="Moment-generating function (MGF) for a negative binomial distribution.">
 	<br>
 </div>
 
@@ -31,7 +31,7 @@ var mgf = require( 'distributions-negative-binomial-mgf' );
 
 #### mgf( t[, options] )
 
-Evaluates the [moment-generating function](https://en.wikipedia.org/wiki/Moment-generating_function) (MGF) for the [Negative Binomial](https://en.wikipedia.org/wiki/Negative Binomial_distribution) distribution. `t` may be either a [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays), or a [`matrix`](https://github.com/dstructs/matrix).
+Evaluates the [moment-generating function](https://en.wikipedia.org/wiki/Moment-generating_function) (MGF) for the [negative binomial](https://en.wikipedia.org/wiki/Negative_binomial_distribution) distribution. `t` may be either a [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays), or a [`matrix`](https://github.com/dstructs/matrix).
 
 ``` javascript
 var matrix = require( 'dstructs-matrix' ),
@@ -83,7 +83,7 @@ The function accepts the following `options`:
 *	__path__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path.
 *	__sep__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path separator. Default: `'.'`.
 
-A [Negative Binomial](https://en.wikipedia.org/wiki/Negative Binomial_distribution) distribution is a function of two parameters: `r`(number of failures until the experiment is stopped) and `p`(success probability). By default, `r` is equal to `1` and `p` is equal to `0.5`. To adjust either parameter, set the corresponding option.
+A [negative binomial](https://en.wikipedia.org/wiki/Negative_binomial_distribution) distribution is a function of two parameters: `r`(number of failures until the experiment is stopped) and `p`(success probability). By default, `r` is equal to `1` and `p` is equal to `0.5`. To adjust either parameter, set the corresponding option.
 
 ``` javascript
 var t = [ 0, 0.5, 1, 1.5, 2, 2.5 ];
@@ -218,7 +218,7 @@ bool = ( mat === out );
 
 ## Notes
 
-*	If an element is __not__ a numeric value, the evaluated [MGF](https://en.wikipedia.org/wiki/Negative Binomial_distribution) is `NaN`.
+*	If an element is __not__ a numeric value, the evaluated [MGF](https://en.wikipedia.org/wiki/Negative_binomial_distribution) is `NaN`.
 
 	``` javascript
 	var data, out;
